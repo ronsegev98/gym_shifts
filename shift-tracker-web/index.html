@@ -1,0 +1,1163 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<meta name="app-version" content="2026.11.01.1">
+<meta name="theme-color" content="#0e2747">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="המשמרות שלי">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<title>המשמרות שלי</title>
+<style>
+:root{
+  --navy:#0e2747; --navy-2:#173a66; --navy-ink:#0b1d36;
+  --green:#14a05a; --green-dk:#0f7f47; --green-soft:#e6f6ee;
+  --bg:#f2f5fa; --card:#ffffff; --text:#0f1d31; --muted:#62708a; --line:#e2e8f1;
+  --amber:#a85b00; --amber-soft:#fff3df; --red:#c62828; --red-soft:#fdecec;
+  --r-lg:22px; --r-md:14px; --r-sm:10px;
+  color-scheme:light;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;min-height:100%;background:var(--bg)}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI","Arial Hebrew",Arial,sans-serif;color:var(--text);font-size:16px;line-height:1.45;-webkit-text-size-adjust:100%;overscroll-behavior-y:none}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid #7fb3ff;outline-offset:2px}
+.num{font-variant-numeric:tabular-nums;direction:ltr;unicode-bidi:isolate;display:inline-block}
+
+/* Top bar */
+.top{position:sticky;top:0;z-index:5;background:var(--navy);color:#fff;padding:calc(env(safe-area-inset-top,0px) + 12px) 20px 14px}
+.top-in{max-width:640px;margin:0 auto;display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
+.top h1{margin:0;font-size:24px;font-weight:750;letter-spacing:-.01em}
+.top .sub{font-size:13px;color:#b9c7dc;margin-top:1px}
+.top .badge{font-size:12px;background:rgba(255,255,255,.12);border-radius:999px;padding:4px 10px;color:#dbe5f3;white-space:nowrap}
+
+main{max-width:640px;margin:0 auto;padding:16px 16px calc(160px + env(safe-area-inset-bottom,0px))}
+
+/* Tab bar */
+.tabs{position:fixed;bottom:0;left:0;right:0;z-index:6;background:#fff;border-top:1px solid var(--line);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px))}
+.tabs-in{max-width:640px;margin:0 auto;display:flex}
+.tabs button{flex:1;background:none;border:0;padding:6px 0 4px;color:#8a97ab;font-size:11.5px;display:flex;flex-direction:column;align-items:center;gap:2px}
+.tabs button.on{color:var(--navy);font-weight:650}
+.tabs svg{width:25px;height:25px}
+
+.fab{position:fixed;z-index:6;left:16px;right:16px;bottom:calc(74px + env(safe-area-inset-bottom,0px));max-width:608px;margin:0 auto;height:58px;border:0;border-radius:18px;background:var(--green);color:#fff;font-size:18px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 8px 22px rgba(20,160,90,.35)}
+.fab:active{background:var(--green-dk);transform:scale(.99)}
+.fab svg{width:24px;height:24px}
+
+/* Blocks */
+.hero{background:linear-gradient(160deg,var(--navy) 0%,var(--navy-2) 100%);color:#fff;border-radius:var(--r-lg);padding:20px 20px 18px;position:relative;overflow:hidden}
+.hero .m{font-size:14px;color:#b9c7dc}
+.hero .big{font-size:44px;font-weight:800;letter-spacing:-.02em;line-height:1.1;margin:4px 0 14px}
+.hero .row{display:flex;gap:10px}
+.hero .pill{flex:1;background:rgba(255,255,255,.09);border-radius:var(--r-md);padding:10px 12px}
+.hero .pill b{display:block;font-size:20px;font-weight:700}
+.hero .pill span{font-size:12.5px;color:#b9c7dc}
+.hero::after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;left:-60px;top:-70px;background:radial-gradient(circle,rgba(20,160,90,.35),transparent 70%)}
+
+.sec{margin-top:22px}
+.sec h2{font-size:15px;color:var(--muted);font-weight:650;margin:0 4px 8px}
+.panel{background:var(--card);border-radius:var(--r-md);border:1px solid var(--line)}
+.panel.pad{padding:14px 16px}
+
+.owed{display:flex;align-items:center;gap:14px;width:100%;text-align:right;background:var(--amber-soft);border:1px solid #f3dcb5;border-radius:var(--r-md);padding:14px 16px;margin-top:12px}
+.owed.zero{background:var(--green-soft);border-color:#c6ebd6}
+.owed .ic{width:40px;height:40px;border-radius:12px;background:#fff;display:grid;place-items:center;color:var(--amber);flex:none}
+.owed.zero .ic{color:var(--green)}
+.owed .ic svg{width:22px;height:22px}
+.owed .t{flex:1}
+.owed .t b{display:block;font-size:20px}
+.owed .t span{font-size:13px;color:var(--muted)}
+.chev{width:18px;height:18px;color:#9aa6b8;transform:scaleX(-1)}
+
+.gymrow{display:flex;align-items:center;gap:12px;padding:12px 16px;border-top:1px solid var(--line)}
+.gymrow:first-child{border-top:0}
+.dot{width:12px;height:12px;border-radius:50%;flex:none}
+.gymrow .nm{flex:1;min-width:0}
+.gymrow .nm b{display:block;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gymrow .nm span{font-size:13px;color:var(--muted)}
+.bar{height:6px;background:#edf1f7;border-radius:4px;margin-top:6px;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:4px}
+.amt{font-weight:700;white-space:nowrap}
+
+/* Shift list */
+.daylbl{font-size:13px;color:var(--muted);margin:16px 6px 6px;font-weight:600}
+.shift{display:flex;align-items:center;gap:12px;width:100%;text-align:right;background:var(--card);border:1px solid var(--line);border-radius:var(--r-md);padding:12px 14px;margin-bottom:8px}
+.shift .stripe{width:5px;align-self:stretch;border-radius:4px;flex:none}
+.shift .mid{flex:1;min-width:0}
+.shift .mid b{display:block;font-weight:650}
+.shift .mid span{font-size:13px;color:var(--muted)}
+.shift .end{text-align:left}
+.tag{display:inline-block;font-size:11.5px;font-weight:650;border-radius:999px;padding:2px 8px;margin-top:3px}
+.tag.paid{background:var(--green-soft);color:var(--green-dk)}
+.tag.unpaid{background:var(--amber-soft);color:var(--amber)}
+
+.filters{display:flex;flex-direction:column;gap:10px;margin-bottom:6px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px;font-size:14.5px;display:flex;align-items:center;gap:7px;white-space:nowrap}
+.chip.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.seg{display:flex;background:#e6ebf3;border-radius:12px;padding:3px}
+.seg button{flex:1;border:0;background:none;border-radius:9px;padding:8px 4px;font-size:14.5px;color:var(--muted)}
+.seg button.on{background:#fff;color:var(--navy);font-weight:650;box-shadow:0 1px 3px rgba(14,39,71,.12)}
+select.sel{width:100%;appearance:none;-webkit-appearance:none;border:1px solid var(--line);background:#fff;border-radius:12px;padding:11px 14px;font-size:15.5px}
+
+.sumbar{display:flex;justify-content:space-between;align-items:center;background:var(--navy-ink);color:#fff;border-radius:var(--r-md);padding:12px 16px;margin:10px 0 4px}
+.sumbar span{font-size:13px;color:#b9c7dc}
+.sumbar b{font-size:19px}
+
+.btn{border:0;border-radius:14px;padding:14px 16px;font-size:16.5px;font-weight:650;background:#e9eef6;color:var(--navy);width:100%;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn.primary{background:var(--green);color:#fff}
+.btn.navy{background:var(--navy);color:#fff}
+.btn.danger{background:var(--red-soft);color:var(--red)}
+.btn.ghost{background:transparent;color:var(--navy);border:1.5px dashed #b8c4d6}
+.btn:disabled{opacity:.45}
+.btn svg{width:20px;height:20px}
+.btns{display:flex;gap:10px}
+.btns .btn{flex:1}
+.stack>*+*{margin-top:10px}
+
+.empty{text-align:center;padding:36px 20px;color:var(--muted)}
+.empty .em-ic{width:64px;height:64px;border-radius:20px;background:#e6edf7;color:var(--navy);display:grid;place-items:center;margin:0 auto 12px}
+.empty .em-ic svg{width:32px;height:32px}
+.empty b{display:block;color:var(--text);font-size:18px;margin-bottom:4px}
+
+.note{border-radius:var(--r-md);padding:12px 14px;font-size:14.5px;background:#eaf1fb;color:#244a7a}
+.note.warn{background:var(--amber-soft);color:#7a4300}
+.note.ok{background:var(--green-soft);color:var(--green-dk)}
+
+/* Report chart */
+.chart{display:flex;align-items:flex-end;gap:8px;height:150px;padding:16px 12px 0}
+.chart .col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:6px}
+.chart .col i{width:100%;max-width:38px;border-radius:8px 8px 3px 3px;background:#c9d6ea;min-height:3px}
+.chart .col.cur i{background:var(--green)}
+.chart .col small{font-size:11.5px;color:var(--muted)}
+.chart .col em{font-style:normal;font-size:11px;color:var(--muted)}
+.mcard{display:block;width:100%;text-align:right;background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:14px 16px;margin-bottom:10px}
+.mcard .hd{display:flex;justify-content:space-between;align-items:baseline}
+.mcard .hd b{font-size:17px}
+.mcard .hd .amt{font-size:19px}
+.mcard .meta{display:flex;gap:16px;font-size:13.5px;color:var(--muted);margin-top:2px}
+.split{display:flex;height:8px;border-radius:5px;overflow:hidden;background:#edf1f7;margin:10px 0 6px}
+.split i{display:block;height:100%}
+.legend{display:flex;gap:14px;font-size:12.5px;color:var(--muted)}
+.legend span::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;margin-left:5px;background:var(--c)}
+
+/* Gyms */
+.gymcard{display:flex;gap:12px;align-items:center;width:100%;text-align:right;background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:14px 16px;margin-bottom:10px}
+.gymcard .av{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:19px;flex:none}
+.gymcard .mid{flex:1;min-width:0}
+.gymcard .mid b{display:block;font-size:17px}
+.gymcard .mid span{font-size:13.5px;color:var(--muted)}
+.gymcard.arch{opacity:.55}
+
+/* Sheet & dialogs */
+.overlay{position:fixed;inset:0;background:rgba(9,22,42,.45);z-index:20;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .18s}
+.overlay.show{opacity:1;pointer-events:auto}
+.sheet{background:var(--bg);width:100%;max-width:640px;max-height:94vh;max-height:94dvh;border-radius:24px 24px 0 0;display:flex;flex-direction:column;transform:translateY(30px);transition:transform .22s ease}
+.overlay.show .sheet{transform:none}
+.sheet-hd{display:flex;align-items:center;justify-content:space-between;padding:14px 18px 10px;background:#fff;border-radius:24px 24px 0 0;border-bottom:1px solid var(--line)}
+.sheet-hd h3{margin:0;font-size:19px}
+.xbtn{border:0;background:#eef2f8;border-radius:50%;width:34px;height:34px;display:grid;place-items:center;color:var(--muted)}
+.xbtn svg{width:18px;height:18px}
+.sheet-bd{overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px 16px calc(24px + env(safe-area-inset-bottom,0px))}
+#dlg{z-index:30;align-items:center;padding:20px}
+.dialog{background:#fff;border-radius:20px;width:100%;max-width:360px;padding:20px;transform:scale(.96);transition:transform .18s}
+#dlg.show .dialog{transform:none}
+.dialog p{margin:0 0 16px;font-size:16.5px;white-space:pre-line}
+.dialog .fld{margin-bottom:16px}
+
+/* Forms */
+.fld{margin-bottom:14px}
+.fld>label,.lbl{display:block;font-size:14px;font-weight:650;color:var(--muted);margin:0 4px 6px}
+.inp{width:100%;border:1px solid var(--line);background:#fff;border-radius:12px;padding:13px 14px;font-size:17px;min-height:50px;-webkit-appearance:none;appearance:none}
+textarea.inp{min-height:70px;resize:vertical}
+input[type=date].inp,input[type=time].inp{text-align:right}
+.two{display:flex;gap:10px}
+.two>*{flex:1;min-width:0}
+.gympick{display:flex;flex-wrap:wrap;gap:8px}
+.gympick button{border:1.5px solid var(--line);background:#fff;border-radius:14px;padding:12px 16px;font-size:16.5px;font-weight:600;display:flex;align-items:center;gap:8px}
+.gympick button.on{border-color:var(--navy);background:var(--navy);color:#fff}
+.quick{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.quick button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font-size:14px;color:var(--navy)}
+.stepper{display:flex;align-items:center;gap:10px}
+.stepper button{width:52px;height:50px;border-radius:12px;border:1px solid var(--line);background:#fff;font-size:26px;font-weight:500;color:var(--navy);flex:none;line-height:1}
+.stepper .inp{text-align:center;font-size:22px;font-weight:700}
+.toggle{display:flex;align-items:center;justify-content:space-between;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.toggle b{font-weight:650}
+.sw{position:relative;width:52px;height:32px;flex:none}
+.sw input{opacity:0;width:100%;height:100%;margin:0;position:absolute;inset:0;z-index:1}
+.sw i{position:absolute;inset:0;background:#cfd8e5;border-radius:999px;transition:background .15s}
+.sw i::after{content:"";position:absolute;top:3px;right:3px;width:26px;height:26px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:transform .15s}
+.sw input:checked+i{background:var(--green)}
+.sw input:checked+i::after{transform:translateX(-20px)}
+details.more summary{list-style:none;color:var(--navy);font-weight:600;padding:6px 4px 12px;font-size:15px}
+details.more summary::-webkit-details-marker{display:none}
+
+/* Live receipt */
+.receipt{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden;margin:4px 0 16px}
+.receipt .ln{display:flex;justify-content:space-between;padding:9px 16px;font-size:15px;border-top:1px dashed var(--line)}
+.receipt .ln:first-child{border-top:0}
+.receipt .ln span{color:var(--muted)}
+.receipt .tot{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:var(--green-soft)}
+.receipt .tot span{font-weight:650;color:var(--green-dk)}
+.receipt .tot b{font-size:26px;color:var(--green-dk);font-weight:800}
+.receipt .err{padding:14px 16px;background:var(--amber-soft);color:#7a4300;font-size:15px}
+.receipt .info{padding:8px 16px;font-size:13px;color:var(--muted);background:#f7f9fc}
+
+.methods{display:flex;flex-direction:column;gap:8px}
+.methods label{display:flex;gap:10px;align-items:flex-start;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px}
+.methods label.on{border-color:var(--navy);box-shadow:inset 0 0 0 1px var(--navy)}
+.methods input{margin-top:4px;accent-color:var(--navy);width:18px;height:18px;flex:none}
+.methods b{display:block}
+.methods span{font-size:13px;color:var(--muted)}
+.brk{display:flex;gap:6px;align-items:flex-end;margin-bottom:8px}
+.brk .c{flex:1;min-width:0}
+.brk .c small{display:block;font-size:12px;color:var(--muted);margin:0 2px 3px}
+.brk .inp{padding:10px 8px;min-height:44px;font-size:16px;text-align:center}
+.brk .rm{width:40px;height:44px;border:0;background:var(--red-soft);color:var(--red);border-radius:10px;flex:none;font-size:20px}
+.colors{display:flex;gap:10px;flex-wrap:wrap}
+.colors button{width:38px;height:38px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 1px var(--line)}
+.colors button.on{box-shadow:0 0 0 3px var(--navy)}
+.ver{display:flex;align-items:center;gap:12px;width:100%;text-align:right;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:8px}
+.ver .mid{flex:1;min-width:0}
+.ver .mid b{display:block}
+.ver .mid span{font-size:13.5px;color:var(--muted)}
+.ver .now{font-size:11.5px;background:var(--green-soft);color:var(--green-dk);border-radius:999px;padding:2px 8px;font-weight:650}
+.kv{display:flex;justify-content:space-between;padding:11px 16px;border-top:1px solid var(--line);font-size:15.5px;gap:12px}
+.kv:first-child{border-top:0}
+.kv span{color:var(--muted)}
+.kv b{font-weight:600;text-align:left}
+
+.sigpad{width:100%;height:170px;background:#fff;border:1.5px dashed #b8c4d6;border-radius:12px;touch-action:none;display:block}
+.invprev{margin:12px 0}
+.invprev img{width:100%;display:block;border-radius:6px;box-shadow:0 2px 12px rgba(14,39,71,.16);margin-bottom:10px;background:#fff}
+#toast{position:fixed;left:50%;bottom:calc(150px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--navy-ink);color:#fff;border-radius:14px;padding:12px 18px;font-size:15px;z-index:40;opacity:0;pointer-events:none;transition:all .2s;max-width:88vw;text-align:center}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top"><div class="top-in"><div><h1 id="title">המשמרות שלי</h1><div class="sub" id="sub"></div></div><div id="topbadge"></div></div></header>
+<main id="view"></main>
+<button class="fab" id="fab" data-a="addShift"></button>
+<nav class="tabs"><div class="tabs-in" id="tabs"></div></nav>
+<div class="overlay" id="sheetWrap"><div class="sheet" id="sheet"></div></div>
+<div class="overlay" id="dlg"><div class="dialog" id="dialog"></div></div>
+<div id="toast"></div>
+<input type="file" id="fileIn" accept=".json,application/json,text/plain" hidden>
+<script>window.onerror=function(m,s,l){var d=document.createElement("div");d.style.cssText="position:fixed;top:40px;left:10px;right:10px;z-index:99;background:#fdecec;color:#c62828;padding:14px;border-radius:12px;font:15px -apple-system;direction:ltr";d.textContent="Error: "+m+" (line "+l+")";(document.body||document.documentElement).appendChild(d);};</script>
+<script>/*__BOOT__*/</script>
+<script>
+"use strict";
+/* ============ Utilities ============ */
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+const pad = n => String(n).padStart(2, "0");
+const r2 = n => Math.round((+n || 0) * 100) / 100;
+const dstr = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+const todayStr = () => dstr(new Date());
+const curMonth = () => todayStr().slice(0, 7);
+const HEB_M = ["ינואר","פברואר","מרץ","אפריל","מאי","יוני","יולי","אוגוסט","ספטמבר","אוקטובר","נובמבר","דצמבר"];
+const HEB_MS = ["ינו׳","פבר׳","מרץ","אפר׳","מאי","יוני","יולי","אוג׳","ספט׳","אוק׳","נוב׳","דצמ׳"];
+const HEB_D = ["ראשון","שני","שלישי","רביעי","חמישי","שישי","שבת"];
+const monthLabel = k => { const [y, m] = k.split("-"); return `${HEB_M[+m - 1]} ${y}`; };
+const fmtDate = d => { if (!d) return ""; const [y, m, dd] = d.split("-"); return `${+dd}.${+m}.${y}`; };
+const weekday = d => { const [y, m, dd] = d.split("-").map(Number); return HEB_D[new Date(y, m - 1, dd).getDay()]; };
+const nis = n => "₪" + r2(n).toLocaleString("he-IL", { maximumFractionDigits: 2 });
+const N = (n) => `<span class="num">${n}</span>`;
+const fmtH = h => { const m = Math.round((+h || 0) * 60); return m % 60 ? `${Math.floor(m / 60)}:${pad(m % 60)}` : String(m / 60); };
+const addMin = (t, mins) => { const [h, m] = t.split(":").map(Number); const x = (((h * 60 + m + mins) % 1440) + 1440) % 1440; return `${pad(Math.floor(x / 60))}:${pad(x % 60)}`; };
+const COLORS = ["#2563eb","#14a05a","#e08a00","#d6336c","#7c3aed","#0891b2","#c62828","#475569"];
+const METHOD_NAME = { fixed: "תעריף שעתי קבוע", brackets: "לפי מספר משתתפים", base_plus: "בסיס + תוספת למשתתף" };
+
+const IC = {
+  home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg>',
+  list:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="17" rx="2"/><path d="M8 2v4M16 2v4M4 10h16M8 14h3M8 17h6"/></svg>',
+  chart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M6 17v-5M11 17V7M16 17v-8M21 17V4"/></svg>',
+  gym:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5v11M17.5 6.5v11M3 9v6M21 9v6M6.5 12h11"/></svg>',
+  shield:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>',
+  plus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
+  x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+  chev:'<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>',
+  clock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+  down:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>',
+  up:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V9M7 14l5-5 5 5M5 4h14"/></svg>',
+  doc:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4M9 12h6M9 16h6"/></svg>',
+  gear:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M2 12h3M19 12h3M4.9 19.1L7 17M17 7l2.1-2.1"/></svg>',
+  table:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M3 15h18M9 4v16"/></svg>'
+};
+
+/* ============ Storage ============ */
+const LS_KEY = "shiftTracker.v1";
+const IS_BRIDGE = !!window.__SCRIPTABLE__;
+function emptyState() { return { version: 1, gyms: [], shifts: [], settings: { lastBackup: null } }; }
+function normalize(s) {
+  if (!s || typeof s !== "object") return emptyState();
+  if (s.data && s.app === "shift-tracker") s = s.data;
+  return {
+    version: 1,
+    gyms: Array.isArray(s.gyms) ? s.gyms : [],
+    shifts: Array.isArray(s.shifts) ? s.shifts : [],
+    settings: (s.settings && typeof s.settings === "object") ? s.settings : { lastBackup: null }
+  };
+}
+function loadState() {
+  let s = window.__BOOT_DATA__ || null;
+  if (!s) { try { const raw = localStorage.getItem(LS_KEY); if (raw) s = JSON.parse(raw); } catch (e) {} }
+  return normalize(s);
+}
+let state = loadState();
+function persist() {
+  const json = JSON.stringify(state);
+  try { localStorage.setItem(LS_KEY, json); } catch (e) {}
+  if (IS_BRIDGE) bridgeSend({ type: "save", data: json });
+}
+
+/* Bridge to the Scriptable host (only active inside the iPhone app) */
+let pendingCb = null, pingTimer = null;
+const outbox = [];
+function bridgeSend(msg) {
+  if (msg.type === "save") { const i = outbox.findIndex(m => m.type === "save"); if (i >= 0) { outbox[i] = msg; return; } }
+  if (pendingCb) { const cb = pendingCb; pendingCb = null; clearTimeout(pingTimer); cb(JSON.stringify(msg)); }
+  else outbox.push(msg);
+}
+window.__bridgeWait = function (cb) {
+  if (outbox.length) { cb(JSON.stringify(outbox.shift())); return; }
+  pendingCb = cb;
+  clearTimeout(pingTimer);
+  pingTimer = setTimeout(() => { if (pendingCb === cb) { pendingCb = null; cb('{"type":"ping"}'); } }, 20000);
+};
+let exportDone = null;
+window.__onExported = ok => { if (exportDone) { const f = exportDone; exportDone = null; f(!!ok); } };
+window.__onImport = text => handleImportText(text);
+window.__onImportFailed = () => toast("לא נבחר קובץ");
+
+function exportFile(name, content, mime) {
+  return new Promise(res => {
+    if (IS_BRIDGE) { exportDone = res; bridgeSend({ type: "export", name, content }); return; }
+    shareOrDownload(name, new Blob([content], { type: mime })).then(res);
+    return;
+    try {
+      const blob = new Blob([content], { type: mime });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob); a.download = name;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+      res(true);
+    } catch (e) { res(false); }
+  });
+}
+function requestImport() {
+  if (IS_BRIDGE) { bridgeSend({ type: "import" }); return; }
+  const fi = $("#fileIn"); fi.value = "";
+  fi.onchange = () => { const f = fi.files[0]; if (!f) return; const rd = new FileReader(); rd.onload = () => handleImportText(rd.result); rd.readAsText(f); };
+  fi.click();
+}
+
+async function shareOrDownload(name, blob) {
+  const touch = matchMedia("(pointer: coarse)").matches;
+  try {
+    const file = new File([blob], name, { type: blob.type });
+    if (touch && navigator.canShare && navigator.canShare({ files: [file] })) { await navigator.share({ files: [file] }); return true; }
+  } catch (e) { if (e && e.name === "AbortError") return false; }
+  try {
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name;
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000); return true;
+  } catch (e) { return false; }
+}
+
+/* ============ Pay calculation ============ */
+const gymById = id => state.gyms.find(g => g.id === id);
+const activeGyms = keepId => state.gyms.filter(g => !g.archived || g.id === keepId);
+function rateFor(gym, date) {
+  return (gym.rates || []).filter(r => r.effectiveFrom <= date).sort((a, b) => (a.effectiveFrom < b.effectiveFrom ? 1 : -1))[0] || null;
+}
+function hourlyFor(rate, p) {
+  if (rate.method === "fixed") return { ok: true, hourly: +rate.hourly, detail: "תעריף קבוע" };
+  if (rate.method === "brackets") {
+    const b = (rate.brackets || []).slice().sort((a, b) => a.min - b.min).find(b => p >= b.min && p <= b.max);
+    if (!b) return { ok: false, error: `אין מדרגת תשלום שמתאימה ל-${p} משתתפים. אפשר להוסיף מדרגה בלשונית "מכונים".` };
+    return { ok: true, hourly: +b.rate, detail: `מדרגה ${b.min}–${b.max} משתתפים` };
+  }
+  if (rate.method === "base_plus") {
+    return { ok: true, hourly: r2(+rate.base + (+rate.perParticipant) * p), detail: `בסיס ${nis(rate.base)} + ${nis(rate.perParticipant)} × ${p}` };
+  }
+  return { ok: false, error: "שיטת תשלום לא מוכרת" };
+}
+function duration(start, end, brk) {
+  const [sh, sm] = start.split(":").map(Number), [eh, em] = end.split(":").map(Number);
+  let a = sh * 60 + sm, b = eh * 60 + em, crosses = false;
+  if (b <= a) { b += 1440; crosses = true; }
+  return { mins: b - a - (+brk || 0), crosses };
+}
+function computeShift(f) {
+  const gym = gymById(f.gymId);
+  if (!gym) return { ok: false, error: "בחרי מכון" };
+  if (!f.date) return { ok: false, error: "בחרי תאריך" };
+  if (!f.start || !f.end) return { ok: false, error: "בחרי שעת התחלה ושעת סיום" };
+  const rate = rateFor(gym, f.date);
+  if (!rate) return { ok: false, error: `ל"${gym.name}" אין תעריף שבתוקף בתאריך ${fmtDate(f.date)}. אפשר להוסיף תעריף מוקדם יותר בלשונית "מכונים".` };
+  const needsP = rate.method !== "fixed";
+  const p = f.participants === "" || f.participants == null ? null : Math.max(0, Math.floor(+f.participants));
+  if (needsP && p == null) return { ok: false, error: "במכון הזה התשלום תלוי במספר המשתתפים. הזיני כמה משתתפים היו.", needsP };
+  const d = duration(f.start, f.end, f.breakMin);
+  if (d.mins <= 0) return { ok: false, error: "ההפסקה ארוכה מהמשמרת. בדקי את השעות.", needsP };
+  const hr = hourlyFor(rate, p ?? 0);
+  if (!hr.ok) return { ok: false, error: hr.error, needsP };
+  const hours = d.mins / 60;
+  return {
+    ok: true, needsP, hours, mins: d.mins, crosses: d.crosses, hourly: hr.hourly, detail: hr.detail,
+    earnings: r2(hours * hr.hourly),
+    snapshot: {
+      rateId: rate.id, effectiveFrom: rate.effectiveFrom, method: rate.method, detail: hr.detail, hourly: hr.hourly,
+      hourlyBase: rate.hourly ?? null, base: rate.base ?? null, perParticipant: rate.perParticipant ?? null,
+      brackets: rate.brackets ? rate.brackets.map(b => ({ ...b })) : null
+    }
+  };
+}
+function rateSummary(r) {
+  if (r.method === "fixed") return `${nis(r.hourly)} לשעה`;
+  if (r.method === "brackets") return (r.brackets || []).slice().sort((a, b) => a.min - b.min).map(b => `${b.min}–${b.max}: ${nis(b.rate)}`).join("   ");
+  return `${nis(r.base)} לשעה + ${nis(r.perParticipant)} לכל משתתף`;
+}
+function stats(list) {
+  return list.reduce((a, s) => { const e = +s.earnings || 0; a.earn += e; a.hours += +s.hours || 0; a.count++; if (s.paid) a.paid += e; else a.unpaid += e; return a; },
+    { earn: 0, hours: 0, count: 0, paid: 0, unpaid: 0 });
+}
+const gymName = s => gymById(s.gymId)?.name || s.gymName || "מכון שנמחק";
+const gymColor = id => gymById(id)?.color || "#94a3b8";
+const sortShifts = list => list.slice().sort((a, b) => (a.date === b.date ? (b.start || "").localeCompare(a.start || "") : (a.date < b.date ? 1 : -1)));
+
+/* ============ UI state & rendering ============ */
+const ui = { tab: "home", fMonth: curMonth(), fGym: "all", fStatus: "all" };
+const TABS = [["home", "בית", "home"], ["shifts", "משמרות", "list"], ["reports", "דוחות", "chart"], ["gyms", "מכונים", "gym"], ["backup", "הגדרות", "gear"]];
+
+function render() {
+  const v = VIEWS[ui.tab]();
+  $("#title").textContent = v.title;
+  $("#sub").textContent = v.sub || "";
+  $("#topbadge").innerHTML = v.badge ? `<span class="badge">${v.badge}</span>` : "";
+  $("#view").innerHTML = v.html;
+  $("#tabs").innerHTML = TABS.map(([k, l, i]) => `<button class="${ui.tab === k ? "on" : ""}" data-a="tab" data-k="${k}" aria-label="${l}">${IC[i]}<span>${l}</span></button>`).join("");
+  const fab = $("#fab");
+  fab.innerHTML = IC.plus + "הוספת משמרת";
+  fab.style.display = (ui.tab === "home" || ui.tab === "shifts") && state.gyms.length ? "flex" : "none";
+}
+
+function shiftRow(s) {
+  const p = s.participants != null ? ` · ${s.participants} משתתפים` : "";
+  return `<button class="shift" data-a="shift" data-id="${s.id}">
+    <span class="stripe" style="background:${gymColor(s.gymId)}"></span>
+    <span class="mid"><b>${esc(gymName(s))}</b><span>יום ${weekday(s.date)}, ${N(fmtDate(s.date))} · ${N(`${s.start}–${s.end}`)}${p}</span></span>
+    <span class="end"><span class="amt">${N(nis(s.earnings))}</span><br><span class="tag ${s.paid ? "paid" : "unpaid"}">${s.paid ? "שולם" : "לא שולם"}</span></span>
+  </button>`;
+}
+
+const VIEWS = {
+  home() {
+    const m = curMonth();
+    const month = state.shifts.filter(s => s.date.slice(0, 7) === m);
+    const st = stats(month);
+    const unpaid = state.shifts.filter(s => !s.paid);
+    const ust = stats(unpaid);
+    let html = "";
+    if (!state.gyms.length) {
+      html += `<div class="empty"><div class="em-ic">${IC.gym}</div><b>ברוכה הבאה!</b>כדי להתחיל, הוסיפי את המכון הראשון שבו את עובדת ואת התעריף שלו.</div>
+        <button class="btn primary" data-a="newGym">${IC.plus}הוספת מכון</button>`;
+      return { title: "המשמרות שלי", sub: "", html };
+    }
+    html += `<section class="hero"><div class="m">הכנסות ב${HEB_M[+m.slice(5) - 1]}</div>
+      <div class="big">${N(nis(st.earn))}</div>
+      <div class="row"><div class="pill"><b>${N(fmtH(st.hours))}</b><span>שעות עבודה</span></div><div class="pill"><b>${N(st.count)}</b><span>משמרות</span></div></div></section>`;
+    html += `<button class="owed ${unpaid.length ? "" : "zero"}" data-a="goUnpaid"><span class="ic">${unpaid.length ? IC.clock : IC.check}</span>
+      <span class="t">${unpaid.length ? `<b>${N(nis(ust.unpaid))}</b><span>ממתין לתשלום, ${unpaid.length} משמרות</span>` : `<b>הכול שולם</b><span>אין משמרות שממתינות לתשלום</span>`}</span>${unpaid.length ? IC.chev : ""}</button>`;
+    const byGym = {};
+    month.forEach(s => { (byGym[s.gymId] ||= []).push(s); });
+    const rows = Object.entries(byGym).map(([id, list]) => ({ id, name: gymName(list[0]), ...stats(list) })).sort((a, b) => b.earn - a.earn);
+    if (rows.length) {
+      const max = Math.max(...rows.map(r => r.earn), 1);
+      html += `<div class="sec"><h2>לפי מכון החודש</h2><div class="panel">${rows.map(r => `<div class="gymrow"><span class="dot" style="background:${gymColor(r.id)}"></span>
+        <span class="nm"><b>${esc(r.name)}</b><span>${N(fmtH(r.hours))} שעות · ${N(r.count)} משמרות</span><div class="bar"><i style="width:${(r.earn / max) * 100}%;background:${gymColor(r.id)}"></i></div></span>
+        <span class="amt">${N(nis(r.earn))}</span></div>`).join("")}</div></div>`;
+    }
+    const recent = sortShifts(state.shifts).slice(0, 4);
+    if (recent.length) html += `<div class="sec"><h2>משמרות אחרונות</h2>${recent.map(shiftRow).join("")}</div>`;
+    else html += `<div class="empty"><div class="em-ic">${IC.list}</div><b>עדיין אין משמרות</b>הקישי על "הוספת משמרת" כדי לרשום את הראשונה.</div>`;
+    const lb = state.settings.lastBackup;
+    if (state.shifts.length >= 5 && (!lb || Date.now() - lb > 30 * 864e5)) {
+      html += `<div class="sec"><button class="note warn" style="width:100%;text-align:right;border:0" data-a="tab" data-k="backup">${lb ? `הגיבוי האחרון נשמר לפני יותר מחודש.` : `עוד לא נשמר גיבוי.`} הנתונים שמורים רק בטלפון הזה, כדאי לשמור גיבוי. הקישי כאן.</button></div>`;
+    }
+    return { title: "המשמרות שלי", sub: `יום ${weekday(todayStr())}, ${fmtDate(todayStr())}`, html };
+  },
+
+  shifts() {
+    const months = [...new Set(state.shifts.map(s => s.date.slice(0, 7)).concat(curMonth()))].sort().reverse();
+    let list = state.shifts;
+    if (ui.fMonth !== "all") list = list.filter(s => s.date.slice(0, 7) === ui.fMonth);
+    if (ui.fGym !== "all") list = list.filter(s => s.gymId === ui.fGym);
+    if (ui.fStatus !== "all") list = list.filter(s => (ui.fStatus === "paid" ? s.paid : !s.paid));
+    list = sortShifts(list);
+    const st = stats(list);
+    const gymsUsed = state.gyms.filter(g => !g.archived || state.shifts.some(s => s.gymId === g.id));
+    let html = `<div class="filters">
+      <select class="sel" data-ch="fMonth"><option value="all"${ui.fMonth === "all" ? " selected" : ""}>כל החודשים</option>${months.map(k => `<option value="${k}"${ui.fMonth === k ? " selected" : ""}>${monthLabel(k)}</option>`).join("")}</select>
+      <div class="chips"><button class="chip ${ui.fGym === "all" ? "on" : ""}" data-a="fGym" data-k="all">כל המכונים</button>${gymsUsed.map(g => `<button class="chip ${ui.fGym === g.id ? "on" : ""}" data-a="fGym" data-k="${g.id}"><span class="dot" style="background:${g.color}"></span>${esc(g.name)}</button>`).join("")}</div>
+      <div class="seg">${[["all", "הכול"], ["unpaid", "לא שולם"], ["paid", "שולם"]].map(([k, l]) => `<button class="${ui.fStatus === k ? "on" : ""}" data-a="fStatus" data-k="${k}">${l}</button>`).join("")}</div></div>`;
+    html += `<div class="sumbar"><div><span>${N(st.count)} משמרות · ${N(fmtH(st.hours))} שעות</span></div><b>${N(nis(st.earn))}</b></div>`;
+    if (state.shifts.length) html += `<button class="btn" style="margin:10px 0 2px" data-a="invoice">${IC.doc}הפקת חשבונית</button>`;
+    if (ui.fStatus === "unpaid" && list.length) html += `<button class="btn navy" style="margin:10px 0 2px" data-a="bulkPaid">${IC.check}סימון כל ${list.length} המשמרות כשולמו</button>`;
+    if (!list.length) html += `<div class="empty"><div class="em-ic">${IC.list}</div><b>אין משמרות להצגה</b>${state.shifts.length ? "נסי לשנות את הסינון למעלה." : 'הקישי על "הוספת משמרת" כדי להתחיל.'}</div>`;
+    let last = "";
+    list.forEach(s => { if (s.date !== last) { html += `<div class="daylbl">יום ${weekday(s.date)}, ${N(fmtDate(s.date))}</div>`; last = s.date; } html += shiftRow(s); });
+    return { title: "משמרות", sub: ui.fMonth === "all" ? "כל החודשים" : monthLabel(ui.fMonth), html };
+  },
+
+  reports() {
+    if (!state.shifts.length) return { title: "דוחות", html: `<div class="empty"><div class="em-ic">${IC.chart}</div><b>אין עדיין נתונים</b>אחרי שתרשמי כמה משמרות, יופיעו כאן סיכומים חודשיים.</div>` };
+    const by = {};
+    state.shifts.forEach(s => { (by[s.date.slice(0, 7)] ||= []).push(s); });
+    const now = new Date(); const last6 = [];
+    for (let i = 5; i >= 0; i--) { const d = new Date(now.getFullYear(), now.getMonth() - i, 1); last6.push(`${d.getFullYear()}-${pad(d.getMonth() + 1)}`); }
+    const vals = last6.map(k => stats(by[k] || []).earn); const max = Math.max(...vals, 1);
+    const yr = String(now.getFullYear()); const yst = stats(state.shifts.filter(s => s.date.startsWith(yr)));
+    let html = `<div class="panel"><div class="chart">${last6.map((k, i) => `<div class="col ${k === curMonth() ? "cur" : ""}"><em>${vals[i] ? N(Math.round(vals[i]).toLocaleString("he-IL")) : ""}</em><i style="height:${(vals[i] / max) * 100}%"></i><small>${HEB_MS[+k.slice(5) - 1]}</small></div>`).join("")}</div>
+      <div class="kv" style="margin-top:12px"><span>סה״כ ${yr}</span><b>${N(nis(yst.earn))}</b></div><div class="kv"><span>שעות ב-${yr}</span><b>${N(fmtH(yst.hours))}</b></div></div>`;
+    html += `<div class="sec"><h2>לפי חודש</h2>`;
+    Object.keys(by).sort().reverse().forEach(k => {
+      const st = stats(by[k]); const pp = st.earn ? (st.paid / st.earn) * 100 : 0;
+      const g = {}; by[k].forEach(s => { (g[s.gymId] ||= []).push(s); });
+      html += `<button class="mcard" data-a="openMonth" data-k="${k}"><div class="hd"><b>${monthLabel(k)}</b><span class="amt">${N(nis(st.earn))}</span></div>
+        <div class="meta"><span>${N(fmtH(st.hours))} שעות</span><span>${N(st.count)} משמרות</span></div>
+        <div class="split"><i style="width:${pp}%;background:var(--green)"></i><i style="width:${100 - pp}%;background:#f0b44c"></i></div>
+        <div class="legend"><span style="--c:var(--green)">שולם ${N(nis(st.paid))}</span><span style="--c:#f0b44c">לא שולם ${N(nis(st.unpaid))}</span></div>
+        <div style="margin-top:8px">${Object.entries(g).map(([id, l]) => { const s2 = stats(l); return `<div class="legend" style="justify-content:space-between;margin-top:4px"><span style="--c:${gymColor(id)}">${esc(gymName(l[0]))}</span><span class="num">${fmtH(s2.hours)} ש׳ · ${nis(s2.earn)}</span></div>`; }).join("")}</div></button>`;
+    });
+    html += `</div><button class="btn" data-a="exportCsv">${IC.table}ייצוא כל המשמרות לאקסל (CSV)</button>`;
+    return { title: "דוחות", sub: "הכנסות ושעות לפי חודש", html };
+  },
+
+  gyms() {
+    let html = state.gyms.length ? "" : `<div class="empty"><div class="em-ic">${IC.gym}</div><b>עוד לא הוספת מכונים</b>לכל מכון יש שיטת תשלום ותעריפים משלו.</div>`;
+    state.gyms.slice().sort((a, b) => (a.archived ? 1 : 0) - (b.archived ? 1 : 0)).forEach(g => {
+      const cur = rateFor(g, todayStr()) || (g.rates || []).slice().sort((a, b) => (a.effectiveFrom < b.effectiveFrom ? -1 : 1))[0];
+      html += `<button class="gymcard ${g.archived ? "arch" : ""}" data-a="gym" data-id="${g.id}"><span class="av" style="background:${g.color}">${esc(g.name.trim().charAt(0))}</span>
+        <span class="mid"><b>${esc(g.name)}${g.archived ? " (בארכיון)" : ""}</b><span>${cur ? `${METHOD_NAME[cur.method]}: ${esc(rateSummary(cur))}` : "אין תעריף"}</span></span>${IC.chev}</button>`;
+    });
+    html += `<button class="btn ghost" data-a="newGym" style="margin-top:6px">${IC.plus}הוספת מכון</button>`;
+    return { title: "מכונים", sub: "שיטות תשלום ותעריפים", html };
+  },
+
+  backup() {
+    const lb = state.settings.lastBackup;
+    const b = biz();
+    const html = `<div class="sec" style="margin-top:0"><h2>חשבוניות</h2><div class="stack"><button class="btn primary" data-a="invoice">${IC.doc}הפקת חשבונית</button>
+      <button class="btn" data-a="business">פרטי העסק והחתימה${b.businessName || b.ownerName ? "" : " (עוד לא מולא)"}</button></div></div>
+      <div class="sec"><h2>גיבוי</h2></div><div class="note warn stack"><div><b>הנתונים שמורים רק במכשיר הזה.</b> אין סנכרון ואין שרת. אם הטלפון יאבד או האפליקציה תימחק, הנתונים יימחקו איתם.</div><div>כדאי לשמור גיבוי פעם בחודש, למשל ל-iCloud Drive או לשלוח לעצמך במייל.</div></div>
+      <div class="panel" style="margin-top:14px"><div class="kv"><span>גיבוי אחרון</span><b>${lb ? N(fmtDate(dstr(new Date(lb)))) : "עדיין לא"}</b></div><div class="kv"><span>משמרות שמורות</span><b>${N(state.shifts.length)}</b></div><div class="kv"><span>מכונים</span><b>${N(state.gyms.length)}</b></div><div class="kv"><span>גרסת האפליקציה</span><b>${N(document.querySelector('meta[name="app-version"]').content)}</b></div></div>
+      <div class="stack" style="margin-top:16px">
+        <button class="btn primary" data-a="backupNow">${IC.down}שמירת גיבוי</button>
+        <button class="btn" data-a="restore">${IC.up}שחזור מגיבוי</button>
+        <button class="btn" data-a="exportCsv">${IC.table}ייצוא משמרות לאקסל (CSV)</button>
+      </div>
+      <div class="note" style="margin-top:16px">"שמירת גיבוי" יוצרת קובץ אחד עם כל המכונים, התעריפים והמשמרות. "שחזור מגיבוי" מחליף את כל הנתונים במכשיר בנתונים מהקובץ.</div>`;
+    return { title: "הגדרות", sub: "שמור במכשיר הזה", html };
+  }
+};
+
+/* ============ Sheets & dialogs ============ */
+function openSheet(title, body, mount) {
+  $("#sheet").innerHTML = `<div class="sheet-hd"><h3>${title}</h3><button class="xbtn" data-a="closeSheet" aria-label="סגירה">${IC.x}</button></div><div class="sheet-bd">${body}</div>`;
+  $("#sheetWrap").classList.add("show");
+  $("#sheet .sheet-bd").scrollTop = 0;
+  if (mount) mount($("#sheet"));
+}
+function closeSheet() { $("#sheetWrap").classList.remove("show"); }
+$("#sheetWrap").addEventListener("click", e => { if (e.target.id === "sheetWrap") closeSheet(); });
+
+function dialog(html, buttons) {
+  return new Promise(res => {
+    $("#dialog").innerHTML = html + `<div class="btns">${buttons.map((b, i) => `<button class="btn ${b.cls || ""}" data-i="${i}">${b.label}</button>`).join("")}</div>`;
+    $("#dlg").classList.add("show");
+    $("#dialog").querySelectorAll(".btns button").forEach(btn => btn.onclick = () => {
+      const b = buttons[+btn.dataset.i]; const v = b.value ? b.value($("#dialog")) : b.ret;
+      $("#dlg").classList.remove("show"); res(v);
+    });
+  });
+}
+const confirmBox = (msg, okLabel = "אישור", danger = false) => dialog(`<p>${esc(msg)}</p>`, [{ label: "ביטול", ret: false }, { label: okLabel, cls: danger ? "danger" : "navy", ret: true }]);
+const askDate = msg => dialog(`<p>${esc(msg)}</p><div class="fld"><input class="inp" type="date" id="dlgDate" value="${todayStr()}"></div>`,
+  [{ label: "ביטול", ret: null }, { label: "שמירה", cls: "primary", value: d => d.querySelector("#dlgDate").value || todayStr() }]);
+let toastT;
+function toast(msg) { const t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove("show"), 2600); }
+
+/* ============ Shift form ============ */
+function lastAtGym(gymId) { return sortShifts(state.shifts.filter(s => s.gymId === gymId))[0]; }
+function openShiftForm(id) {
+  const editing = id ? state.shifts.find(s => s.id === id) : null;
+  const gyms = activeGyms(editing?.gymId);
+  if (!gyms.length) { toast("קודם צריך להוסיף מכון"); ui.tab = "gyms"; render(); return; }
+  let f;
+  if (editing) f = { ...editing, participants: editing.participants ?? "", paidDate: editing.paidDate || "" };
+  else {
+    const last = state.shifts.slice().sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0))[0];
+    const gid = last && gyms.some(g => g.id === last.gymId) ? last.gymId : gyms[0].id;
+    f = { date: todayStr(), gymId: gid, start: "", end: "", breakMin: "", participants: "", notes: "", paid: false, paidDate: "" };
+    applyGymDefaults(f);
+  }
+  const body = `
+    <div class="fld"><span class="lbl">מכון</span><div class="gympick" id="gp">${gyms.map(g => `<button type="button" data-g="${g.id}" class="${g.id === f.gymId ? "on" : ""}"><span class="dot" style="background:${g.color}"></span>${esc(g.name)}</button>`).join("")}</div></div>
+    <div class="fld"><label for="fDate">תאריך</label><input class="inp" type="date" id="fDate" value="${f.date}"></div>
+    <div class="two"><div class="fld"><label for="fStart">התחלה</label><input class="inp" type="time" id="fStart" value="${f.start}"></div>
+      <div class="fld"><label for="fEnd">סיום</label><input class="inp" type="time" id="fEnd" value="${f.end}"></div></div>
+    <div class="quick" id="quick" style="margin:-6px 0 14px"><span class="lbl" style="margin:6px 4px 0">משך:</span>${[[45, "45 דק׳"], [60, "שעה"], [90, "שעה וחצי"], [120, "שעתיים"]].map(([m, l]) => `<button type="button" data-m="${m}">${l}</button>`).join("")}</div>
+    <div class="fld" id="pWrap"><label for="fP" id="pLbl">מספר משתתפים</label><div class="stepper"><button type="button" data-step="-1" aria-label="פחות">−</button><input class="inp" id="fP" type="number" inputmode="numeric" min="0" value="${f.participants}" placeholder="0"><button type="button" data-step="1" aria-label="יותר">+</button></div></div>
+    <details class="more" ${f.breakMin || f.notes ? "open" : ""}><summary>+ הפסקה והערות</summary>
+      <div class="fld"><label for="fBrk">הפסקה (בדקות)</label><input class="inp" type="number" inputmode="numeric" min="0" id="fBrk" value="${f.breakMin || ""}" placeholder="0"></div>
+      <div class="fld"><label for="fNotes">הערות</label><textarea class="inp" id="fNotes" placeholder="לא חובה">${esc(f.notes)}</textarea></div>
+    </details>
+    <div id="rcpt"></div>
+    <div class="fld"><div class="toggle"><b>התשלום כבר התקבל</b><span class="sw"><input type="checkbox" id="fPaid" ${f.paid ? "checked" : ""} aria-label="שולם"><i></i></span></div></div>
+    <div class="fld" id="pdWrap" style="${f.paid ? "" : "display:none"}"><label for="fPD">תאריך התשלום</label><input class="inp" type="date" id="fPD" value="${f.paidDate || todayStr()}"></div>
+    <button class="btn primary" id="fSave">שמירת משמרת</button>
+    ${editing ? `<button class="btn danger" id="fDel" style="margin-top:10px">מחיקת משמרת</button>` : ""}`;
+  openSheet(editing ? "עריכת משמרת" : "משמרת חדשה", body, root => {
+    const q = s => root.querySelector(s);
+    const read = () => { f.date = q("#fDate").value; f.start = q("#fStart").value; f.end = q("#fEnd").value; f.participants = q("#fP").value; f.breakMin = q("#fBrk").value; f.notes = q("#fNotes").value; f.paid = q("#fPaid").checked; f.paidDate = q("#fPD").value; };
+    const core = () => editing && ["date", "gymId", "start", "end"].every(k => String(editing[k] ?? "") === String(f[k] ?? "")) &&
+      String(editing.participants ?? "") === String(f.participants === "" ? "" : Math.floor(+f.participants)) && (+editing.breakMin || 0) === (+f.breakMin || 0);
+    let calc = null;
+    const update = () => {
+      read();
+      const unchanged = core();
+      calc = computeShift(f);
+      const fixed = calc.needsP === false || (calc.ok && !calc.needsP);
+      q("#pLbl").textContent = fixed ? "מספר משתתפים (לא משפיע על התשלום כאן)" : "מספר משתתפים";
+      let h = `<div class="receipt">`;
+      if (unchanged) {
+        h += `<div class="ln"><span>שעות</span><b class="num">${fmtH(editing.hours)}</b></div><div class="ln"><span>תעריף שנשמר</span><b class="num">${nis(editing.hourly)} לשעה</b></div>
+          <div class="tot"><span>סכום שנשמר</span><b class="num">${nis(editing.earnings)}</b></div>`;
+      } else if (calc.ok) {
+        h += `<div class="ln"><span>שעות</span><b class="num">${fmtH(calc.hours)}</b></div>
+          <div class="ln"><span>${esc(calc.detail)}</span><b class="num">${nis(calc.hourly)} לשעה</b></div>
+          <div class="tot"><span>סה״כ למשמרת</span><b class="num">${nis(calc.earnings)}</b></div>`;
+        if (calc.crosses) h += `<div class="info">המשמרת עוברת את חצות. השעות חושבו עד הסיום ביום שאחרי.</div>`;
+        if (editing) h += `<div class="info">שינית פרטים במשמרת, לכן הסכום יחושב מחדש לפי התעריף שבתוקף בתאריך שלה.</div>`;
+      } else h += `<div class="err">${esc(calc.error)}</div>`;
+      q("#rcpt").innerHTML = h + `</div>`;
+      q("#fSave").disabled = !unchanged && !calc.ok;
+      q("#pdWrap").style.display = f.paid ? "" : "none";
+    };
+    q("#gp").addEventListener("click", e => {
+      const b = e.target.closest("[data-g]"); if (!b) return;
+      f.gymId = b.dataset.g; root.querySelectorAll("#gp button").forEach(x => x.classList.toggle("on", x === b));
+      if (!editing) { read(); applyGymDefaults(f, true); q("#fStart").value = f.start; q("#fEnd").value = f.end; }
+      update();
+    });
+    q("#quick").addEventListener("click", e => {
+      const b = e.target.closest("[data-m]"); if (!b) return;
+      if (!q("#fStart").value) q("#fStart").value = "18:00";
+      q("#fEnd").value = addMin(q("#fStart").value, +b.dataset.m); update();
+    });
+    root.querySelectorAll("[data-step]").forEach(b => b.onclick = () => { const i = q("#fP"); i.value = Math.max(0, (+i.value || 0) + +b.dataset.step); update(); });
+    root.querySelectorAll("input,textarea").forEach(i => { i.addEventListener("input", update); i.addEventListener("change", update); });
+    q("#fSave").onclick = () => {
+      update();
+      const unchanged = core();
+      if (!unchanged && !calc.ok) return;
+      const rec = editing || { id: uid(), createdAt: Date.now() };
+      Object.assign(rec, {
+        date: f.date, gymId: f.gymId, start: f.start, end: f.end, breakMin: +f.breakMin || 0,
+        participants: f.participants === "" ? null : Math.max(0, Math.floor(+f.participants)),
+        notes: f.notes.trim(), paid: f.paid, paidDate: f.paid ? (f.paidDate || todayStr()) : null, updatedAt: Date.now()
+      });
+      if (!unchanged) Object.assign(rec, { hours: calc.hours, mins: calc.mins, hourly: calc.hourly, earnings: calc.earnings, rateSnapshot: calc.snapshot, gymName: gymById(f.gymId).name });
+      if (!editing) state.shifts.push(rec);
+      persist(); closeSheet(); render(); toast(editing ? "המשמרת עודכנה" : `המשמרת נשמרה: ${nis(rec.earnings)}`);
+    };
+    if (editing) q("#fDel").onclick = async () => {
+      if (!(await confirmBox("למחוק את המשמרת הזאת?", "מחיקה", true))) return;
+      state.shifts = state.shifts.filter(s => s.id !== editing.id); persist(); closeSheet(); render(); toast("המשמרת נמחקה");
+    };
+    update();
+  });
+}
+function applyGymDefaults(f, keepIfSet) {
+  const last = lastAtGym(f.gymId);
+  if (last) { f.start = last.start; f.end = last.end; if (!keepIfSet || !f.breakMin) f.breakMin = last.breakMin || ""; }
+  else if (!keepIfSet || !f.start) { f.start = f.start || ""; f.end = f.end || ""; }
+}
+
+function openShiftDetail(id) {
+  const s = state.shifts.find(x => x.id === id); if (!s) return;
+  const body = `<div class="panel">
+    <div class="kv"><span>מכון</span><b>${esc(gymName(s))}</b></div>
+    <div class="kv"><span>תאריך</span><b>יום ${weekday(s.date)}, ${N(fmtDate(s.date))}</b></div>
+    <div class="kv"><span>שעות</span><b>${N(`${s.start}–${s.end}`)}${s.breakMin ? ` (הפסקה ${s.breakMin} דק׳)` : ""}</b></div>
+    <div class="kv"><span>זמן עבודה</span><b>${N(fmtH(s.hours))} שעות</b></div>
+    ${s.participants != null ? `<div class="kv"><span>משתתפים</span><b>${N(s.participants)}</b></div>` : ""}
+    <div class="kv"><span>תעריף</span><b>${N(nis(s.hourly))} לשעה</b></div>
+    ${s.rateSnapshot?.detail ? `<div class="kv"><span>חישוב</span><b>${esc(s.rateSnapshot.detail)}</b></div>` : ""}
+    <div class="kv"><span>סכום</span><b style="font-size:19px">${N(nis(s.earnings))}</b></div>
+    <div class="kv"><span>סטטוס</span><b>${s.paid ? `שולם${s.paidDate ? ` ב-${N(fmtDate(s.paidDate))}` : ""}` : "לא שולם"}</b></div>
+    ${s.invoiceNo ? `<div class="kv"><span>חשבונית</span><b>${N(esc(s.invoiceNo))}</b></div>` : ""}
+    ${s.notes ? `<div class="kv"><span>הערות</span><b>${esc(s.notes)}</b></div>` : ""}</div>
+    <div class="stack" style="margin-top:14px">
+    ${s.paid ? `<button class="btn" id="dUnpay">סימון כלא שולם</button>` : `<button class="btn primary" id="dPay">${IC.check}סימון כשולם</button>`}
+    <button class="btn navy" id="dEdit">עריכה</button></div>`;
+  openSheet("פרטי משמרת", body, root => {
+    const q = x => root.querySelector(x);
+    if (q("#dPay")) q("#dPay").onclick = async () => { const d = await askDate("מתי התקבל התשלום?"); if (!d) return; s.paid = true; s.paidDate = d; persist(); closeSheet(); render(); toast("סומן כשולם"); };
+    if (q("#dUnpay")) q("#dUnpay").onclick = () => { s.paid = false; s.paidDate = null; persist(); closeSheet(); render(); toast("סומן כלא שולם"); };
+    q("#dEdit").onclick = () => openShiftForm(s.id);
+  });
+}
+
+/* ============ Gym & rate editing ============ */
+function rateEditorHtml(r) {
+  const m = r.method || "fixed";
+  return `<div class="fld"><label for="rFrom">בתוקף מתאריך</label><input class="inp" type="date" id="rFrom" value="${r.effectiveFrom}"></div>
+    <div class="fld"><span class="lbl">שיטת תשלום</span><div class="methods" id="rM">
+      ${[["fixed", "סכום קבוע לשעה, לא משנה כמה משתתפים"], ["brackets", "התעריף לשעה נקבע לפי טווח מספר המשתתפים"], ["base_plus", "תעריף בסיס לשעה + סכום על כל משתתף"]].map(([k, d]) =>
+        `<label class="${m === k ? "on" : ""}"><input type="radio" name="rm" value="${k}" ${m === k ? "checked" : ""}><span><b>${METHOD_NAME[k]}</b><span>${d}</span></span></label>`).join("")}
+    </div></div>
+    <div id="rF-fixed" ${m === "fixed" ? "" : "hidden"}><div class="fld"><label for="rHourly">תעריף לשעה (₪)</label><input class="inp" id="rHourly" type="number" inputmode="decimal" min="0" value="${r.hourly ?? ""}" placeholder="לדוגמה 120"></div></div>
+    <div id="rF-brackets" ${m === "brackets" ? "" : "hidden"}><span class="lbl">מדרגות</span><div id="rBr"></div>
+      <button type="button" class="btn ghost" id="rAddBr" style="padding:10px">${IC.plus}הוספת מדרגה</button></div>
+    <div id="rF-base_plus" ${m === "base_plus" ? "" : "hidden"}><div class="two">
+      <div class="fld"><label for="rBase">בסיס לשעה (₪)</label><input class="inp" id="rBase" type="number" inputmode="decimal" min="0" value="${r.base ?? ""}" placeholder="80"></div>
+      <div class="fld"><label for="rPer">לכל משתתף (₪)</label><input class="inp" id="rPer" type="number" inputmode="decimal" min="0" value="${r.perParticipant ?? ""}" placeholder="5"></div></div></div>
+    <div class="fld" style="margin-top:6px"><span class="lbl">בדיקה מהירה</span><div class="two" style="align-items:center"><input class="inp" id="rTestP" type="number" inputmode="numeric" min="0" value="10" style="max-width:96px;text-align:center"><span id="rTest" style="font-weight:650"></span></div></div>`;
+}
+function mountRateEditor(root, r) {
+  const q = s => root.querySelector(s);
+  let brackets = (r.brackets && r.brackets.length ? r.brackets : [{ min: 1, max: 5, rate: "" }]).map(b => ({ ...b }));
+  const readBr = () => { brackets = [...root.querySelectorAll(".brk")].map(row => ({ min: row.querySelector(".bmin").value, max: row.querySelector(".bmax").value, rate: row.querySelector(".brate").value })); };
+  const drawBr = () => {
+    q("#rBr").innerHTML = brackets.map((b, i) => `<div class="brk" data-i="${i}"><div class="c"><small>ממשתתף</small><input class="inp bmin" type="number" inputmode="numeric" min="0" value="${b.min}"></div>
+      <div class="c"><small>עד משתתף</small><input class="inp bmax" type="number" inputmode="numeric" min="0" value="${b.max}"></div>
+      <div class="c"><small>₪ לשעה</small><input class="inp brate" type="number" inputmode="decimal" min="0" value="${b.rate}"></div>
+      <button type="button" class="rm" aria-label="הסרה">×</button></div>`).join("");
+    q("#rBr").querySelectorAll(".rm").forEach(b => b.onclick = () => { readBr(); brackets.splice(+b.closest(".brk").dataset.i, 1); drawBr(); test(); });
+    q("#rBr").querySelectorAll("input").forEach(i => i.addEventListener("input", test));
+  };
+  const method = () => root.querySelector('input[name="rm"]:checked').value;
+  const test = () => {
+    const out = readRate(root, true); const p = Math.max(0, +q("#rTestP").value || 0);
+    if (!out.ok) { q("#rTest").textContent = "השלימי את הפרטים"; q("#rTest").style.color = "var(--muted)"; return; }
+    const h = hourlyFor(out.rate, p);
+    q("#rTest").innerHTML = h.ok ? `${p} משתתפים ← ${N(nis(h.hourly))} לשעה` : "אין מדרגה למספר הזה";
+    q("#rTest").style.color = h.ok ? "var(--green-dk)" : "var(--amber)";
+  };
+  root._readBr = () => { readBr(); return brackets; };
+  q("#rM").addEventListener("change", () => {
+    const m = method(); root.querySelectorAll("#rM label").forEach(l => l.classList.toggle("on", l.querySelector("input").value === m));
+    ["fixed", "brackets", "base_plus"].forEach(k => q("#rF-" + k).hidden = k !== m); test();
+  });
+  q("#rAddBr").onclick = () => { readBr(); const last = brackets[brackets.length - 1]; const mn = last && last.max !== "" ? +last.max + 1 : 1; brackets.push({ min: mn, max: mn + 4, rate: "" }); drawBr(); test(); };
+  ["#rHourly", "#rBase", "#rPer", "#rTestP"].forEach(s => q(s).addEventListener("input", test));
+  drawBr(); test();
+}
+function readRate(root, quiet) {
+  const q = s => root.querySelector(s);
+  const m = root.querySelector('input[name="rm"]:checked').value;
+  const from = q("#rFrom").value;
+  if (!from) return { ok: false, error: "בחרי מאיזה תאריך התעריף בתוקף" };
+  const rate = { method: m, effectiveFrom: from };
+  const num = v => v !== "" && v != null && isFinite(+v) && +v >= 0;
+  if (m === "fixed") { if (!num(q("#rHourly").value)) return { ok: false, error: "הזיני תעריף לשעה" }; rate.hourly = +q("#rHourly").value; }
+  if (m === "base_plus") {
+    if (!num(q("#rBase").value) || !num(q("#rPer").value)) return { ok: false, error: "הזיני תעריף בסיס וסכום לכל משתתף" };
+    rate.base = +q("#rBase").value; rate.perParticipant = +q("#rPer").value;
+  }
+  if (m === "brackets") {
+    const br = root._readBr ? root._readBr() : [];
+    if (!br.length) return { ok: false, error: "הוסיפי לפחות מדרגה אחת" };
+    for (const b of br) {
+      if (!num(b.min) || !num(b.max) || !num(b.rate)) return { ok: false, error: "השלימי את כל השדות בכל מדרגה" };
+      if (+b.min > +b.max) return { ok: false, error: `במדרגה ${b.min}–${b.max} המספר הראשון גדול מהשני` };
+    }
+    rate.brackets = br.map(b => ({ min: Math.floor(+b.min), max: Math.floor(+b.max), rate: +b.rate })).sort((a, b) => a.min - b.min);
+  }
+  return { ok: true, rate };
+}
+
+function openNewGym() {
+  let color = COLORS[state.gyms.length % COLORS.length];
+  const r = { effectiveFrom: `${new Date().getFullYear()}-01-01`, method: "fixed" };
+  const body = `<div class="fld"><label for="gName">שם המכון</label><input class="inp" id="gName" placeholder="לדוגמה: הולמס פלייס רמת גן"></div>
+    <div class="fld"><span class="lbl">צבע</span><div class="colors" id="gC">${COLORS.map(c => `<button type="button" data-c="${c}" class="${c === color ? "on" : ""}" style="background:${c}" aria-label="צבע"></button>`).join("")}</div></div>
+    <div class="sec" style="margin-top:6px"><h2>התעריף</h2></div>${rateEditorHtml(r)}
+    <div class="note" style="margin-bottom:14px">כשהתעריף ישתנה בעתיד, אפשר להוסיף תעריף חדש עם תאריך. משמרות קודמות לא ישתנו.</div>
+    <button class="btn primary" id="gSave">שמירת מכון</button>`;
+  openSheet("מכון חדש", body, root => {
+    mountRateEditor(root, r);
+    root.querySelector("#gC").addEventListener("click", e => { const b = e.target.closest("[data-c]"); if (!b) return; color = b.dataset.c; root.querySelectorAll("#gC button").forEach(x => x.classList.toggle("on", x === b)); });
+    root.querySelector("#gSave").onclick = () => {
+      const name = root.querySelector("#gName").value.trim();
+      if (!name) return toast("הזיני שם למכון");
+      const out = readRate(root); if (!out.ok) return toast(out.error);
+      state.gyms.push({ id: uid(), name, color, archived: false, rates: [{ id: uid(), ...out.rate }], createdAt: Date.now() });
+      persist(); closeSheet(); if (ui.tab === "home") render(); else { ui.tab = "gyms"; render(); } toast("המכון נשמר");
+    };
+  });
+}
+function openGym(id) {
+  const g = gymById(id); if (!g) return;
+  const cur = rateFor(g, todayStr());
+  const vers = (g.rates || []).slice().sort((a, b) => (a.effectiveFrom < b.effectiveFrom ? 1 : -1));
+  const used = state.shifts.filter(s => s.gymId === id).length;
+  const body = `<div class="fld"><label for="gName">שם המכון</label><input class="inp" id="gName" value="${esc(g.name)}"></div>
+    <div class="fld"><span class="lbl">צבע</span><div class="colors" id="gC">${COLORS.map(c => `<button type="button" data-c="${c}" class="${c === g.color ? "on" : ""}" style="background:${c}" aria-label="צבע"></button>`).join("")}</div></div>
+    <div class="fld"><label for="gInv">שם בחשבונית (לכבוד)</label><input class="inp" id="gInv" value="${esc(g.invoiceName || "")}" placeholder="${esc(g.name)}"></div>
+    <div class="fld"><label for="gAddr">כתובת המכון</label><input class="inp" id="gAddr" value="${esc(g.address || "")}" placeholder="לחשבונית, לא חובה"></div>
+    <div class="fld"><label for="gPh">טלפון המכון</label><input class="inp" id="gPh" type="tel" value="${esc(g.phone || "")}" placeholder="לחשבונית, לא חובה"></div>
+    <div class="sec" style="margin-top:4px"><h2>תעריפים לאורך זמן</h2>
+    ${vers.map(v => `<button class="ver" data-v="${v.id}"><span class="mid"><b>מ-${N(fmtDate(v.effectiveFrom))} ${v === cur ? '<span class="now">בתוקף עכשיו</span>' : ""}</b><span>${METHOD_NAME[v.method]}: ${esc(rateSummary(v))}</span></span>${IC.chev}</button>`).join("")}
+    <button class="btn ghost" id="gAddRate">${IC.plus}תעריף חדש (העלאה או שינוי)</button></div>
+    <div class="stack" style="margin-top:18px"><button class="btn primary" id="gSave">שמירת שינויים</button>
+    <button class="btn" id="gArch">${g.archived ? "החזרה מהארכיון" : "העברה לארכיון (הסתרה ממשמרת חדשה)"}</button>
+    ${used ? "" : `<button class="btn danger" id="gDel">מחיקת מכון</button>`}</div>`;
+  openSheet(esc(g.name), body, root => {
+    const q = s => root.querySelector(s);
+    let color = g.color;
+    q("#gC").addEventListener("click", e => { const b = e.target.closest("[data-c]"); if (!b) return; color = b.dataset.c; root.querySelectorAll("#gC button").forEach(x => x.classList.toggle("on", x === b)); });
+    const saveBasics = () => { const n = q("#gName").value.trim(); if (n) g.name = n; g.color = color; g.invoiceName = q("#gInv").value.trim(); g.address = q("#gAddr").value.trim(); g.phone = q("#gPh").value.trim(); };
+    q("#gSave").onclick = () => { saveBasics(); persist(); closeSheet(); render(); toast("השינויים נשמרו"); };
+    q("#gAddRate").onclick = () => { saveBasics(); persist(); openRate(g.id, null); };
+    root.querySelectorAll("[data-v]").forEach(b => b.onclick = () => { saveBasics(); persist(); openRate(g.id, b.dataset.v); });
+    q("#gArch").onclick = () => { saveBasics(); g.archived = !g.archived; persist(); closeSheet(); render(); toast(g.archived ? "המכון הועבר לארכיון" : "המכון הוחזר"); };
+    if (q("#gDel")) q("#gDel").onclick = async () => { if (!(await confirmBox(`למחוק את "${g.name}"?`, "מחיקה", true))) return; state.gyms = state.gyms.filter(x => x.id !== g.id); persist(); closeSheet(); render(); toast("המכון נמחק"); };
+  });
+}
+function openRate(gymId, rateId) {
+  const g = gymById(gymId);
+  const existing = rateId ? g.rates.find(r => r.id === rateId) : null;
+  const cur = rateFor(g, todayStr());
+  const r = existing ? { ...existing } : { ...(cur || { method: "fixed" }), id: undefined, effectiveFrom: todayStr() };
+  const usedBy = existing ? state.shifts.filter(s => s.rateSnapshot?.rateId === existing.id).length : 0;
+  const body = `${existing ? "" : `<div class="note" style="margin-bottom:14px">התעריף החדש יחול על משמרות מהתאריך שתבחרי והלאה. משמרות שכבר נרשמו שומרות על הסכום שלהן.</div>`}
+    ${rateEditorHtml(r)}
+    ${existing && usedBy ? `<div class="note warn" style="margin-bottom:14px">${usedBy} משמרות חושבו עם התעריף הזה. הן ישמרו על הסכום המקורי גם אם תשני אותו כאן.</div>` : ""}
+    <button class="btn primary" id="rSave">שמירת תעריף</button>
+    ${existing && g.rates.length > 1 ? `<button class="btn danger" id="rDel" style="margin-top:10px">מחיקת תעריף</button>` : ""}`;
+  openSheet(existing ? "עריכת תעריף" : "תעריף חדש", body, root => {
+    mountRateEditor(root, r);
+    root.querySelector("#rSave").onclick = () => {
+      const out = readRate(root); if (!out.ok) return toast(out.error);
+      if (g.rates.some(x => x.effectiveFrom === out.rate.effectiveFrom && x.id !== existing?.id)) return toast("כבר יש תעריף שמתחיל באותו תאריך");
+      if (existing) { Object.keys(existing).forEach(k => { if (k !== "id") delete existing[k]; }); Object.assign(existing, out.rate); }
+      else g.rates.push({ id: uid(), ...out.rate });
+      persist(); render(); openGym(g.id); toast("התעריף נשמר");
+    };
+    const del = root.querySelector("#rDel");
+    if (del) del.onclick = async () => { if (!(await confirmBox("למחוק את התעריף? משמרות קיימות לא ישתנו.", "מחיקה", true))) return; g.rates = g.rates.filter(x => x.id !== existing.id); persist(); render(); openGym(g.id); toast("התעריף נמחק"); };
+  });
+}
+
+/* ============ Invoices ============ */
+const biz = () => (state.settings.business ||= {});
+const pad3 = v => /^\d+$/.test(String(v).trim()) ? String(+v).padStart(3, "0") : String(v).trim();
+const monthRange = k => { const [y, m] = k.split("-").map(Number); return [`${k}-01`, dstr(new Date(y, m, 0))]; };
+const loadImg = src => new Promise(r => { if (!src) return r(null); const i = new Image(); i.onload = () => r(i); i.onerror = () => r(null); i.src = src; });
+const b64ToBytes = b => { const s = atob(b), a = new Uint8Array(s.length); for (let i = 0; i < s.length; i++) a[i] = s.charCodeAt(i); return a; };
+const bytesToB64 = a => { let s = ""; for (let i = 0; i < a.length; i += 0x8000) s += String.fromCharCode.apply(null, a.subarray(i, i + 0x8000)); return btoa(s); };
+
+function invoiceShifts(f) {
+  return state.shifts.filter(s => s.gymId === f.gymId && s.date >= f.from && s.date <= f.to && (!f.onlyNew || !s.invoiceNo || s.invoiceNo === pad3(f.number)));
+}
+function invoiceRows(list) {
+  const by = {};
+  list.forEach(s => { (by[s.date] ||= []).push(s); });
+  return Object.keys(by).sort().map(d => {
+    const l = by[d];
+    const rates = [...new Set(l.map(s => r2(s.hourly)))].sort((a, b) => a - b);
+    return { date: d, hours: r2(l.reduce((a, s) => a + (+s.hours || 0), 0)), rates: rates.join(" + "), total: r2(l.reduce((a, s) => a + (+s.earnings || 0), 0)) };
+  });
+}
+const PW = 1240, PH = 1754, PM = 100, ROWH = 60;
+const PFONT = '-apple-system, "SF Pro Text", "Arial Hebrew", Arial, sans-serif';
+const isHeb = s => /[\u0590-\u05FF]/.test(s);
+function ptxt(c, s, x, y, o = {}) {
+  c.font = `${o.w || 400} ${o.size || 30}px ${PFONT}`; c.fillStyle = o.color || "#111";
+  c.direction = o.dir || (isHeb(String(s)) ? "rtl" : "ltr"); c.textAlign = o.align || "right"; c.textBaseline = "alphabetic";
+  c.fillText(String(s), x, y);
+  return c.measureText(String(s)).width;
+}
+function pkv(c, label, value, xR, y, o = {}) {
+  const w = ptxt(c, label + " ", xR, y, { ...o, dir: "rtl" });
+  if (value) ptxt(c, value, xR - w, y, o);
+}
+function paginate(rows) {
+  const pages = []; let i = 0, n = 0;
+  do {
+    const top = n === 0 ? 720 : 190;
+    const avail = PH - 120 - top - ROWH;
+    const fitAll = Math.floor((avail - ROWH - 230) / ROWH);
+    const rem = rows.length - i;
+    if (rem <= fitAll) { pages.push({ top, rows: rows.slice(i), last: true }); i = rows.length; }
+    else { const cap = Math.max(1, Math.floor(avail / ROWH)); const take = rem === cap ? cap - 1 : Math.min(cap, rem); pages.push({ top, rows: rows.slice(i, i + take), last: false }); i += take; }
+    n++;
+  } while (i < rows.length);
+  return pages;
+}
+async function renderInvoice(inv) {
+  const b = biz(), sig = await loadImg(b.signature);
+  const pages = paginate(inv.rows);
+  return pages.map((pg, pi) => {
+    const cv = document.createElement("canvas"); cv.width = PW; cv.height = PH;
+    const c = cv.getContext("2d");
+    c.fillStyle = "#fff"; c.fillRect(0, 0, PW, PH);
+    const R = PW - PM, L = PM;
+    if (pi === 0) {
+      ptxt(c, b.businessName || b.ownerName || "", R, 175, { size: 72, color: "#1d5c99" });
+      if (b.ownerName) ptxt(c, b.ownerName, R, 248);
+      if (b.phone) pkv(c, "טלפון:", b.phone, R, 290);
+      if (b.taxId) pkv(c, b.taxLabel || "ע.מ", b.taxId, L + 330, 248);
+      if (b.email) ptxt(c, b.email, L + 330, 290, { color: "#1d5c99" });
+      c.fillStyle = "#9a9a9a"; c.fillRect(L, 330, R - L, 2);
+      let y = 400;
+      const line = (l, v) => { if (v) { pkv(c, l, v, R, y); y += 46; } };
+      line("חשבונית מספר:", inv.number); line("תאריך:", fmtDate(inv.date)); line("לכבוד:", inv.client); line("כתובת:", inv.address); line("טלפון:", inv.clientPhone);
+    } else {
+      ptxt(c, b.businessName || b.ownerName || "", R, 120, { size: 40, color: "#1d5c99" });
+      pkv(c, "חשבונית מספר:", inv.number, L + 420, 120, { size: 26 });
+    }
+    // table
+    const colW = (R - L) / 4, cols = [R, R - colW, R - 2 * colW, R - 3 * colW];
+    let y = pg.top;
+    const rowsToDraw = [{ h: true }, ...pg.rows, ...(pg.last ? [{ tot: true }] : [])];
+    rowsToDraw.forEach(row => {
+      if (row.tot) { c.fillStyle = "#d9d9d9"; c.fillRect(L, y, R - L, ROWH); }
+      c.strokeStyle = "#111"; c.lineWidth = 2; c.strokeRect(L, y, R - L, ROWH);
+      for (let k = 1; k < 4; k++) { c.beginPath(); c.moveTo(cols[k], y); c.lineTo(cols[k], y + ROWH); c.stroke(); }
+      const ty = y + ROWH / 2 + 11;
+      if (row.h) ["תאריך:", "שעות עבודה:", "סכום לשעה:", "סה״כ:"].forEach((t, k) => ptxt(c, t, cols[k] - 16, ty));
+      else if (row.tot) { ptxt(c, "סה״כ:", cols[0] - 16, ty, { w: 700 }); ptxt(c, inv.total.toLocaleString("he-IL"), cols[3] - 16, ty, { w: 700, dir: "ltr" }); }
+      else [fmtDate(row.date), String(row.hours), row.rates, row.total.toLocaleString("he-IL")].forEach((t, k) => ptxt(c, t, cols[k] - 16, ty, { dir: "ltr" }));
+      y += ROWH;
+    });
+    if (pg.last) {
+      const sy = y + 110;
+      ptxt(c, "חתימה:", R, sy);
+      c.fillStyle = "#111"; c.fillRect(R - 440, sy + 6, 320, 2);
+      if (sig) { const s = Math.min(320 / sig.width, 130 / sig.height); const w = sig.width * s, h = sig.height * s; c.drawImage(sig, R - 120 - w - (320 - w) / 2, sy + 2 - h * 0.85, w, h); }
+    }
+    if (pages.length > 1) ptxt(c, `עמוד ${pi + 1} מתוך ${pages.length}`, PW / 2, PH - 60, { size: 22, color: "#777", align: "center", dir: "rtl" });
+    return cv;
+  });
+}
+function makePdf(jpegs) { // jpegs: [{bytes,w,h}]
+  const enc = s => { const a = new Uint8Array(s.length); for (let i = 0; i < s.length; i++) a[i] = s.charCodeAt(i) & 255; return a; };
+  const parts = [], offs = []; let len = 0;
+  const push = x => { const b = typeof x === "string" ? enc(x) : x; parts.push(b); len += b.length; };
+  const obj = (n, f) => { offs[n] = len; push(`${n} 0 obj\n`); f(); push("\nendobj\n"); };
+  const W = 595.28, H = 841.89, n = jpegs.length, total = 2 + n * 3;
+  push("%PDF-1.4\n%\xE2\xE3\xCF\xD3\n");
+  obj(1, () => push("<< /Type /Catalog /Pages 2 0 R >>"));
+  obj(2, () => push(`<< /Type /Pages /Kids [${jpegs.map((_, i) => `${3 + i * 3} 0 R`).join(" ")}] /Count ${n} >>`));
+  jpegs.forEach((j, i) => {
+    const p = 3 + i * 3, im = p + 1, ct = p + 2, content = `q ${W} 0 0 ${H} 0 0 cm /Im0 Do Q`;
+    obj(p, () => push(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${W} ${H}] /Resources << /XObject << /Im0 ${im} 0 R >> >> /Contents ${ct} 0 R >>`));
+    obj(im, () => { push(`<< /Type /XObject /Subtype /Image /Width ${j.w} /Height ${j.h} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${j.bytes.length} >>\nstream\n`); push(j.bytes); push("\nendstream"); });
+    obj(ct, () => push(`<< /Length ${content.length} >>\nstream\n${content}\nendstream`));
+  });
+  const xref = len;
+  let x = `xref\n0 ${total + 1}\n0000000000 65535 f \n`;
+  for (let i = 1; i <= total; i++) x += String(offs[i]).padStart(10, "0") + " 00000 n \n";
+  push(x + `trailer\n<< /Size ${total + 1} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF\n`);
+  const out = new Uint8Array(len); let o = 0; parts.forEach(p => { out.set(p, o); o += p.length; });
+  return out;
+}
+function exportBinary(name, bytes, mime) {
+  return new Promise(res => {
+    if (IS_BRIDGE) { exportDone = res; bridgeSend({ type: "exportBinary", mode: "save", name, b64: bytesToB64(bytes) }); return; }
+    shareOrDownload(name, new Blob([bytes], { type: mime })).then(res);
+  });
+}
+function shareImages(b64s, base) {
+  return new Promise(async res => {
+    if (IS_BRIDGE) { exportDone = res; bridgeSend({ type: "exportBinary", mode: "share", images: b64s }); return; }
+    const files = b64s.map((b, i) => new File([b64ToBytes(b)], `${base}${b64s.length > 1 ? "-" + (i + 1) : ""}.jpg`, { type: "image/jpeg" }));
+    try { if (navigator.canShare && navigator.canShare({ files })) { await navigator.share({ files }); return res(true); } } catch (e) { return res(false); }
+    for (const f of files) await exportBinary(f.name, new Uint8Array(await f.arrayBuffer()), "image/jpeg");
+    res(true);
+  });
+}
+
+function openInvoice(pre = {}) {
+  const b = biz();
+  if (!b.businessName && !b.ownerName) {
+    openSheet("חשבונית חדשה", `<div class="empty"><div class="em-ic">${IC.doc}</div><b>קודם ממלאים את פרטי העסק</b>השם, מספר העוסק, הטלפון והחתימה יופיעו בכל חשבונית. ממלאים פעם אחת.</div><button class="btn primary" id="goBiz">מילוי פרטי העסק</button>`,
+      root => root.querySelector("#goBiz").onclick = () => openBusiness(() => openInvoice(pre)));
+    return;
+  }
+  const gyms = state.gyms.filter(g => !g.archived || state.shifts.some(s => s.gymId === g.id));
+  if (!gyms.length) return toast("קודם צריך להוסיף מכון");
+  const t = new Date();
+  const defMonth = pre.month || (t.getDate() <= 15 ? dstr(new Date(t.getFullYear(), t.getMonth() - 1, 1)).slice(0, 7) : curMonth());
+  const [from, to] = monthRange(defMonth);
+  const f = { gymId: pre.gymId && gymById(pre.gymId) ? pre.gymId : gyms[0].id, from, to, number: pad3(b.nextInvoice || 1), date: todayStr(), onlyNew: true };
+  const body = `<div class="fld"><span class="lbl">לאיזה מכון</span><div class="gympick" id="iG">${gyms.map(g => `<button type="button" data-g="${g.id}" class="${g.id === f.gymId ? "on" : ""}"><span class="dot" style="background:${g.color}"></span>${esc(g.name)}</button>`).join("")}</div></div>
+    <div class="two"><div class="fld"><label for="iFrom">ממשמרת בתאריך</label><input class="inp" type="date" id="iFrom" value="${f.from}"></div><div class="fld"><label for="iTo">עד תאריך</label><input class="inp" type="date" id="iTo" value="${f.to}"></div></div>
+    <div class="two"><div class="fld"><label for="iNo">מספר חשבונית</label><input class="inp" id="iNo" inputmode="numeric" value="${esc(f.number)}"></div><div class="fld"><label for="iDate">תאריך החשבונית</label><input class="inp" type="date" id="iDate" value="${f.date}"></div></div>
+    <div class="fld"><div class="toggle"><b>רק משמרות שעוד לא נכנסו לחשבונית</b><span class="sw"><input type="checkbox" id="iNew" checked aria-label="רק חדשות"><i></i></span></div></div>
+    <div id="iSum"></div><div class="invprev" id="iPrev"></div>
+    <div class="stack"><button class="btn primary" id="iPdf">${IC.down}שמירה כ-PDF</button><button class="btn" id="iShare">שליחה כתמונה (וואטסאפ, מייל)</button></div>`;
+  openSheet("חשבונית חדשה", body, root => {
+    const q = s => root.querySelector(s);
+    let pages = [], list = [], tmr = null, seq = 0;
+    const refresh = async () => {
+      f.from = q("#iFrom").value; f.to = q("#iTo").value; f.number = q("#iNo").value.trim(); f.date = q("#iDate").value || todayStr(); f.onlyNew = q("#iNew").checked;
+      const g = gymById(f.gymId); list = invoiceShifts(f);
+      const others = state.shifts.filter(s => s.gymId === f.gymId && s.date >= f.from && s.date <= f.to && s.invoiceNo && s.invoiceNo !== pad3(f.number));
+      const rows = invoiceRows(list), total = r2(rows.reduce((a, r) => a + r.total, 0));
+      let h = list.length ? `<div class="sumbar"><span>${N(list.length)} משמרות, ${N(rows.length)} ימים</span><b>${N(nis(total))}</b></div>` : `<div class="note warn">אין משמרות ב"${esc(g.name)}" בטווח התאריכים הזה.</div>`;
+      if (f.onlyNew && others.length) h += `<div class="note" style="margin-top:8px">${others.length} משמרות בטווח כבר נכנסו לחשבונית קודמת ולא נכללו.</div>`;
+      if (!g.address && !g.phone) h += `<div class="note" style="margin-top:8px">כדי שהכתובת והטלפון של המכון יופיעו בחשבונית, מוסיפים אותם בלשונית "מכונים".</div>`;
+      q("#iSum").innerHTML = h;
+      q("#iPdf").disabled = q("#iShare").disabled = !list.length || !f.number;
+      const my = ++seq;
+      pages = list.length ? await renderInvoice({ number: pad3(f.number), date: f.date, client: g.invoiceName || g.name, address: g.address, clientPhone: g.phone, rows, total }) : [];
+      if (my !== seq) return;
+      q("#iPrev").innerHTML = pages.map(cv => `<img alt="תצוגה מקדימה של החשבונית" src="${cv.toDataURL("image/jpeg", 0.7)}">`).join("");
+    };
+    const later = () => { clearTimeout(tmr); tmr = setTimeout(refresh, 250); };
+    q("#iG").addEventListener("click", e => { const x = e.target.closest("[data-g]"); if (!x) return; f.gymId = x.dataset.g; root.querySelectorAll("#iG button").forEach(y => y.classList.toggle("on", y === x)); refresh(); });
+    root.querySelectorAll("input").forEach(i => { i.addEventListener("input", later); i.addEventListener("change", later); });
+    const done = ok => {
+      if (!ok) return toast("בוטל");
+      const no = pad3(f.number);
+      list.forEach(s => s.invoiceNo = no);
+      if (/^\d+$/.test(no)) b.nextInvoice = Math.max(+b.nextInvoice || 1, +no + 1);
+      (b.invoices ||= []).push({ number: no, gymId: f.gymId, from: f.from, to: f.to, date: f.date, total: r2(list.reduce((a, s) => a + (+s.earnings || 0), 0)), at: Date.now() });
+      persist(); render(); toast(`חשבונית ${no} נוצרה`);
+    };
+    const fileBase = () => `חשבונית ${pad3(f.number)} - ${gymById(f.gymId).name}`.replace(/[\\/:*?"<>|]/g, "");
+    const jpegs = () => pages.map(cv => cv.toDataURL("image/jpeg", 0.9).split(",")[1]);
+    q("#iPdf").onclick = async () => { await refresh(); if (!pages.length) return; const pdf = makePdf(jpegs().map(b64 => ({ bytes: b64ToBytes(b64), w: PW, h: PH }))); done(await exportBinary(fileBase() + ".pdf", pdf, "application/pdf")); };
+    q("#iShare").onclick = async () => { await refresh(); if (!pages.length) return; done(await shareImages(jpegs(), fileBase())); };
+    refresh();
+  });
+}
+
+function trimCanvas(cv) {
+  const c = cv.getContext("2d"), { width: w, height: h } = cv, d = c.getImageData(0, 0, w, h).data;
+  let x0 = w, y0 = h, x1 = -1, y1 = -1;
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) if (d[(y * w + x) * 4 + 3] > 10) { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+  if (x1 < 0) return cv;
+  const p = 8, out = document.createElement("canvas");
+  out.width = x1 - x0 + 1 + p * 2; out.height = y1 - y0 + 1 + p * 2;
+  out.getContext("2d").drawImage(cv, x0 - p, y0 - p, out.width, out.height, 0, 0, out.width, out.height);
+  return out;
+}
+function openBusiness(after) {
+  const b = biz();
+  const body = `<div class="note" style="margin-bottom:14px">הפרטים האלה יופיעו בראש כל חשבונית.</div>
+    <div class="fld"><label for="bName">שם העסק</label><input class="inp" id="bName" value="${esc(b.businessName || "")}" placeholder="למשל SGVFITNESS"></div>
+    <div class="fld"><label for="bOwner">שם מלא</label><input class="inp" id="bOwner" value="${esc(b.ownerName || "")}"></div>
+    <div class="two"><div class="fld" style="flex:0 0 96px"><label for="bTL">סוג</label><select class="inp" id="bTL">${["ע.מ", "ע.פ", "ח.פ"].map(x => `<option ${x === (b.taxLabel || "ע.מ") ? "selected" : ""}>${x}</option>`).join("")}</select></div>
+      <div class="fld"><label for="bTax">מספר עוסק</label><input class="inp" id="bTax" inputmode="numeric" value="${esc(b.taxId || "")}"></div></div>
+    <div class="fld"><label for="bPhone">טלפון</label><input class="inp" id="bPhone" type="tel" value="${esc(b.phone || "")}"></div>
+    <div class="fld"><label for="bMail">מייל</label><input class="inp" id="bMail" type="email" value="${esc(b.email || "")}"></div>
+    <div class="fld"><label for="bNext">מספר החשבונית הבאה</label><input class="inp" id="bNext" inputmode="numeric" value="${esc(b.nextInvoice || 1)}"></div>
+    <div class="fld"><span class="lbl">חתימה (ציירי עם האצבע)</span><canvas class="sigpad" id="bSig"></canvas>
+      <button type="button" class="btn" id="bClr" style="margin-top:8px;padding:10px">ניקוי החתימה</button></div>
+    <button class="btn primary" id="bSave">שמירת פרטים</button>`;
+  openSheet("פרטי העסק", body, async root => {
+    const q = s => root.querySelector(s);
+    const cv = q("#bSig"), k = 2;
+    cv.width = (cv.clientWidth || 340) * k; cv.height = (cv.clientHeight || 170) * k;
+    const c = cv.getContext("2d");
+    const pen = () => { c.lineWidth = 2.6 * k; c.lineCap = "round"; c.lineJoin = "round"; c.strokeStyle = "#16233a"; };
+    pen();
+    let dirty = false, cleared = false, drawing = false;
+    const old = await loadImg(b.signature);
+    if (old) { const s = Math.min(cv.width / old.width, cv.height / old.height); c.drawImage(old, (cv.width - old.width * s) / 2, (cv.height - old.height * s) / 2, old.width * s, old.height * s); }
+    const pos = e => { const r = cv.getBoundingClientRect(); return [(e.clientX - r.left) * (cv.width / r.width), (e.clientY - r.top) * (cv.height / r.height)]; };
+    cv.addEventListener("pointerdown", e => { drawing = true; dirty = true; try { cv.setPointerCapture(e.pointerId); } catch (x) {} const [x, y] = pos(e); c.beginPath(); c.moveTo(x, y); c.lineTo(x + 0.1, y + 0.1); c.stroke(); e.preventDefault(); });
+    cv.addEventListener("pointermove", e => { if (!drawing) return; const [x, y] = pos(e); c.lineTo(x, y); c.stroke(); e.preventDefault(); });
+    ["pointerup", "pointercancel", "pointerleave"].forEach(ev => cv.addEventListener(ev, () => drawing = false));
+    q("#bClr").onclick = () => { c.clearRect(0, 0, cv.width, cv.height); pen(); cleared = true; dirty = false; };
+    q("#bSave").onclick = () => {
+      Object.assign(b, { businessName: q("#bName").value.trim(), ownerName: q("#bOwner").value.trim(), taxLabel: q("#bTL").value, taxId: q("#bTax").value.trim(), phone: q("#bPhone").value.trim(), email: q("#bMail").value.trim(), nextInvoice: Math.max(1, parseInt(q("#bNext").value, 10) || 1) });
+      if (dirty) b.signature = trimCanvas(cv).toDataURL("image/png"); else if (cleared) b.signature = "";
+      persist(); render(); toast("הפרטים נשמרו");
+      if (after) after(); else closeSheet();
+    };
+  });
+}
+
+/* ============ Export / backup ============ */
+function csvCell(v) { const s = String(v ?? ""); return /[",\n\r]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; }
+async function exportCsv() {
+  if (!state.shifts.length) return toast("אין משמרות לייצוא");
+  const head = ["תאריך", "יום", "מכון", "התחלה", "סיום", "הפסקה (דקות)", "שעות", "משתתפים", "תעריף לשעה", "סכום", "סטטוס", "תאריך תשלום", "הערות"];
+  const rows = sortShifts(state.shifts).reverse().map(s => [fmtDate(s.date), weekday(s.date), gymName(s), s.start, s.end, s.breakMin || 0, r2(s.hours), s.participants ?? "", s.hourly, s.earnings, s.paid ? "שולם" : "לא שולם", fmtDate(s.paidDate), s.notes || ""]);
+  const csv = "\ufeff" + [head, ...rows].map(r => r.map(csvCell).join(",")).join("\r\n");
+  const ok = await exportFile(`shifts-${todayStr()}.csv`, csv, "text/csv;charset=utf-8");
+  toast(ok ? "הקובץ נוצר" : "הייצוא בוטל");
+}
+async function backupNow() {
+  const content = JSON.stringify({ app: "shift-tracker", version: 1, exportedAt: new Date().toISOString(), data: state }, null, 1);
+  const ok = await exportFile(`shift-tracker-backup-${todayStr()}.json`, content, "application/json");
+  if (ok) { state.settings.lastBackup = Date.now(); persist(); render(); toast("הגיבוי נשמר"); }
+  else toast("הגיבוי בוטל");
+}
+async function handleImportText(text) {
+  let parsed;
+  try { parsed = JSON.parse(text); } catch (e) { return toast("הקובץ הזה אינו קובץ גיבוי תקין"); }
+  const data = normalize(parsed);
+  const valid = parsed && (parsed.app === "shift-tracker" || Array.isArray(parsed.gyms)) && data.gyms.every(g => g && g.id && g.name && Array.isArray(g.rates)) && data.shifts.every(s => s && s.id && s.date && s.gymId);
+  if (!valid) return toast("הקובץ הזה אינו קובץ גיבוי של האפליקציה");
+  const ok = await confirmBox(`לשחזר מהגיבוי?\nבגיבוי: ${data.gyms.length} מכונים ו-${data.shifts.length} משמרות.\nהנתונים הנוכחיים (${state.shifts.length} משמרות) יוחלפו.`, "שחזור", true);
+  if (!ok) return;
+  state = data; persist(); ui.tab = "home"; render(); toast("הנתונים שוחזרו");
+}
+
+/* ============ Events ============ */
+const ACTIONS = {
+  tab: d => { ui.tab = d.k; render(); window.scrollTo(0, 0); },
+  addShift: () => openShiftForm(null),
+  shift: d => openShiftDetail(d.id),
+  goUnpaid: () => { ui.tab = "shifts"; ui.fMonth = "all"; ui.fGym = "all"; ui.fStatus = "unpaid"; render(); window.scrollTo(0, 0); },
+  fGym: d => { ui.fGym = d.k; render(); },
+  fStatus: d => { ui.fStatus = d.k; render(); },
+  openMonth: d => { ui.tab = "shifts"; ui.fMonth = d.k; ui.fGym = "all"; ui.fStatus = "all"; render(); window.scrollTo(0, 0); },
+  bulkPaid: async () => {
+    let list = state.shifts.filter(s => !s.paid);
+    if (ui.fMonth !== "all") list = list.filter(s => s.date.slice(0, 7) === ui.fMonth);
+    if (ui.fGym !== "all") list = list.filter(s => s.gymId === ui.fGym);
+    const d = await askDate(`לסמן ${list.length} משמרות (${nis(stats(list).earn)}) כשולמו? מתי התקבל התשלום?`);
+    if (!d) return; list.forEach(s => { s.paid = true; s.paidDate = d; }); persist(); render(); toast("סומנו כשולמו");
+  },
+  newGym: () => openNewGym(),
+  gym: d => openGym(d.id),
+  closeSheet: () => closeSheet(),
+  exportCsv: () => exportCsv(),
+  invoice: () => openInvoice({ gymId: ui.tab === "shifts" && ui.fGym !== "all" ? ui.fGym : null, month: ui.tab === "shifts" && ui.fMonth !== "all" ? ui.fMonth : null }),
+  business: () => openBusiness(),
+  backupNow: () => backupNow(),
+  restore: () => requestImport()
+};
+document.addEventListener("click", e => { const el = e.target.closest("[data-a]"); if (!el) return; const f = ACTIONS[el.dataset.a]; if (f) { e.preventDefault(); f(el.dataset, el); } });
+document.addEventListener("change", e => { const el = e.target.closest("[data-ch]"); if (!el) return; ui[el.dataset.ch] = el.value; render(); });
+
+render();
+if (!IS_BRIDGE) {
+  try { navigator.storage && navigator.storage.persist && navigator.storage.persist(); } catch (e) {}
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
+    navigator.serviceWorker.register("sw.js").catch(() => {});
+  }
+}
+</script>
+</body>
+</html>
